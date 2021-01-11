@@ -9,6 +9,8 @@ trigger:
 variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
+  # Tag build ID
+  tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build
@@ -16,6 +18,10 @@ stages:
   jobs:
   - job: MavenPackageAndPublishArtifacts
     displayName: Maven Package and Publish Artifacts
+    pool:
+      vmImage: $(vmImageName)
+  - job: Build
+    displayName: Build Docker Image
     pool:
       vmImage: $(vmImageName)
 
@@ -37,3 +43,11 @@ stages:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
         Contents: '**/target/*.?(war|jar)'
         TargetFolder: $(Build.ArtifactStagingDirectory)
+    
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: 'my-app/Dockerfile'
+        tags: |
+          $(tag)

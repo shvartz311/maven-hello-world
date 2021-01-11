@@ -11,7 +11,7 @@ variables:
   vmImageName: 'ubuntu-latest'
   # Tag build ID
   tag: '$(Build.BuildId)'
-  imageRepository: 'shvartz/azuredevopsexercise:v1'
+  imageRepository: 'shvartz/azuredevopsexercise'
 
 stages:
 - stage: Build

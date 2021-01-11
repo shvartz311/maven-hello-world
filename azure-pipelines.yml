@@ -12,7 +12,6 @@ variables:
   # Tag build ID
   tag: '$(Build.BuildId)'
   imageRepository: 'shvartz/azuredevopsexercise:v1'
-  dockerfilePath: 'my-app/Dockerfile'
 
 stages:
 - stage: Build
@@ -51,6 +50,6 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
+        dockerfile: 'my-app/Dockerfile'
         tags: |
           $(tag)
